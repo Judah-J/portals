@@ -33,7 +33,15 @@ const FingerPortal = (() => {
     { name: "Ice fracture", effect: "nokia", effectName: "Nokia LCD", edge: "#b5dcff", low: [7,22,59], mid: [74,146,231], high: [214,247,255], levels: 11, scanline: true,
       wave: "sine", sample: "ice", transpose: 0, rootMidi: 53, beats: 16, bpm: 100, division: 2, pattern: [0,3,null,2,1,null,2,0], blobWave: "triangle", notes: 2, gate: 0.82 },
     { name: "Ink wash", effect: "mosaic", effectName: "Mosaic", edge: "#e0d4bf", low: [11,10,15], mid: [95,85,77], high: [236,229,206], contrast: 1.45,
-      wave: "sine", sample: "ink", transpose: 0, rootMidi: 53, beats: 8, bpm: 90, division: 2, pattern: [1,null,2,0,null,3,2,1], blobWave: "sine", notes: 2, gate: 0.62 }
+      wave: "sine", sample: "ink", transpose: 0, rootMidi: 53, beats: 8, bpm: 90, division: 2, pattern: [1,null,2,0,null,3,2,1], blobWave: "sine", notes: 2, gate: 0.62 },
+    {"name":"Checker Floor","effect":"checker","effectName":"Checker Floor","edge":"#ffdbb5","low":[21,14,29],"high":[255,187,143],"sample":"terrace1","bank":"terrace","transpose":0,"rootMidi":55,"beats":16,"bpm":124,"division":2,"pattern":[0,2,null,1,3,null,1,2],"blobWave":"sine","notes":2,"gate":0.72},
+    {"name":"Signal Bleed","effect":"glitch","effectName":"Signal Bleed","edge":"#ff8fb0","low":[18,5,32],"high":[252,99,159],"sample":"terrace2","bank":"terrace","transpose":0,"rootMidi":55,"beats":16,"bpm":124,"division":2,"pattern":[0,null,3,2,null,1,2,0],"blobWave":"triangle","notes":2,"gate":0.72},
+    {"name":"Venetian Glass","effect":"venetian","effectName":"Venetian Glass","edge":"#e8d894","low":[22,29,16],"high":[245,231,167],"sample":"terrace3","bank":"terrace","transpose":0,"rootMidi":55,"beats":16,"bpm":124,"division":2,"pattern":[0,1,3,null,2,null,1,0],"blobWave":"sine","notes":2,"gate":0.72},
+    {"name":"Liquid Ribbon","effect":"ribbon","effectName":"Liquid Ribbon","edge":"#a3faff","low":[4,26,42],"high":[126,232,227],"sample":"terrace4","bank":"terrace","transpose":0,"rootMidi":50,"beats":16,"bpm":124,"division":2,"pattern":[1,null,0,3,2,1,null,2],"blobWave":"triangle","notes":2,"gate":0.72},
+    {"name":"Prismatic Fold","effect":"fold","effectName":"Prismatic Fold","edge":"#dac1ff","low":[18,9,35],"high":[232,192,255],"sample":"terrace5","bank":"terrace","transpose":0,"rootMidi":50,"beats":32,"bpm":124,"division":2,"pattern":[0,3,null,2,1,null,3,2],"blobWave":"sine","notes":2,"gate":0.72},
+    {"name":"Blueprint","effect":"blueprint","effectName":"Blueprint","edge":"#badcff","low":[6,20,59],"high":[173,215,255],"sample":"terrace6","bank":"terrace","transpose":0,"rootMidi":50,"beats":32,"bpm":124,"division":2,"pattern":[0,null,2,1,3,2,null,1],"blobWave":"triangle","notes":2,"gate":0.72},
+    {"name":"Ink Stipple","effect":"stipple","effectName":"Ink Stipple","edge":"#f7dac1","low":[26,12,17],"high":[235,216,183],"sample":"terrace7","bank":"terrace","transpose":0,"rootMidi":52,"beats":32,"bpm":124,"division":2,"pattern":[0,1,null,3,0,null,2,1],"blobWave":"sine","notes":2,"gate":0.72},
+    {"name":"Chrome Bands","effect":"chrome","effectName":"Chrome Bands","edge":"#d8f9eb","low":[10,14,20],"high":[218,248,248],"sample":"terrace8","bank":"terrace","transpose":0,"rootMidi":55,"beats":16,"bpm":125,"division":2,"pattern":[0,2,3,null,2,1,null,3],"blobWave":"triangle","notes":2,"gate":0.72}
   ];
   const choices = (...entries) => entries.map(([name, sample]) => ({ name, sample }));
   // Key and BPM of each prepared buffer, before the shared preset playback rate.
@@ -104,7 +112,27 @@ const FingerPortal = (() => {
     inkLoop: ["Fm",90],
     inkMosaic: ["Fm",90],
     inkKantharos: ["Fm",90],
-    inkBass: ["Fm",90]
+    inkBass: ["Fm",90],
+    terrace1Loop: ["Gm",124],
+    thSynth12402: ["Gm",124],
+    thBass124Gm: ["Gm",124],
+    terrace2Loop: ["Gm",124],
+    thSynth12404: ["Gm",124],
+    terrace3Loop: ["Gm",124],
+    thSynth12406: ["Gm",124],
+    terrace4Loop: ["Dm",124],
+    thSynth12408: ["Dm",124],
+    thBass124Dm: ["Dm",124],
+    terrace5Loop: ["Dm",124],
+    thSynth12410: ["Dm",124],
+    terrace6Loop: ["Dm",124],
+    thSynth12417: ["Dm",124],
+    terrace7Loop: ["Em",124],
+    thSynth12415: ["Em",124],
+    thBass124Em: ["Em",124],
+    terrace8Loop: ["Gm",125],
+    thSynth12502: ["Gm",125],
+    thBass125Gm: ["Gm",125]
   };
   function compatibleChoices(options, dedupePairs = false) {
     const seenPairs = new Set();
@@ -138,7 +166,15 @@ const FingerPortal = (() => {
     mercury: choices(["Pâte de Verre","mercuryVerre"]),
     copper: choices(["Silica","copperSilica"]),
     ice: choices(["Graal","iceGraal"]),
-    ink: choices(["Mosaic","inkMosaic"], ["Kantharos","inkKantharos"])
+    ink: choices(["Mosaic","inkMosaic"], ["Kantharos","inkKantharos"]),
+    terrace1: choices(["Synth 02","thSynth12402"]),
+    terrace2: choices(["Synth 04","thSynth12404"]),
+    terrace3: choices(["Synth 06","thSynth12406"]),
+    terrace4: choices(["Synth 08","thSynth12408"]),
+    terrace5: choices(["Synth 10","thSynth12410"]),
+    terrace6: choices(["Synth 17","thSynth12417"]),
+    terrace7: choices(["Synth 15","thSynth12415"]),
+    terrace8: choices(["Synth 02","thSynth12502"])
   }, true);
   const bassChoices = compatibleChoices({
     silver: choices(["Pontil 1","pontil1A115"], ["Pontil 2","pontil2A115"], ["Scavo","scavoA115"]),
@@ -155,14 +191,26 @@ const FingerPortal = (() => {
     mercury: choices(["Pontil 2", "mercuryBass"]),
     copper: choices(["Pontil 2", "copperBass"]),
     ice: choices(["Pontil 2", "iceBass"]),
-    ink: choices(["Pontil 2", "inkBass"])
+    ink: choices(["Pontil 2", "inkBass"]),
+    terrace1: choices(["Terrace bass","thBass124Gm"]),
+    terrace2: choices(["Terrace bass","thBass124Gm"]),
+    terrace3: choices(["Terrace bass","thBass124Gm"]),
+    terrace4: choices(["Terrace bass","thBass124Dm"]),
+    terrace5: choices(["Terrace bass","thBass124Dm"]),
+    terrace6: choices(["Terrace bass","thBass124Dm"]),
+    terrace7: choices(["Terrace bass","thBass124Em"]),
+    terrace8: choices(["Terrace bass","thBass125Gm"])
   });
   const percussion = Object.fromEntries([90, 100, 115].map(bpm => [bpm, {
     drums: [1, 2, 3].map(number => ({ name: "Full drums " + number, sample: "full" + bpm + "_" + number })),
     tops: { name: "Tops", sample: "tops" + bpm }
   }]));
   let detectorPromise;
-  let samplePromise;
+  const terraceDrums = Object.fromEntries([124, 125].map(bpm => [bpm, {
+    drums: [1, 2, 3].map(number => ({ name: "Terrace drums " + number, sample: "thDrums" + bpm + "_" + number })),
+    tops: { name: "Terrace percussion", sample: "thTops" + bpm }
+  }]));
+  const samplePromises = new Map();
 
   function loadDetector() {
     if (!detectorPromise) {
@@ -201,7 +249,8 @@ const FingerPortal = (() => {
   const mix = (a, b, t) => a + (b - a) * t;
   const midpoint = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
 
-  function createGesture() {
+  function createGesture(bank = "verre") {
+    const bankStyles = styles.filter(style => (style.bank ?? "verre") === bank);
     let state = "idle";
     let variant = -1;
     let lastSeen = -Infinity;
@@ -283,7 +332,7 @@ const FingerPortal = (() => {
           separationSince ??= now;
           if (now - separationSince >= 28) {
             state = "open";
-            variant = (variant + 1) % styles.length;
+            variant = (variant + 1) % bankStyles.length;
             layerIndex = -1;
             drumsIndex = bassIndex = -1;
             topsOn = false;
@@ -296,10 +345,10 @@ const FingerPortal = (() => {
       }
       if (state !== "open") return null;
 
-      const style = styles[variant];
+      const style = bankStyles[variant];
       const layerChoices = matchingLayers[style.sample];
       const bassOptions = bassChoices[style.sample];
-      const drumOptions = percussion[style.bpm ?? 115];
+      const drumOptions = (style.bank === "terrace" ? terraceDrums : percussion)[style.bpm ?? 115];
       const triggered = new Map();
       const activation = [];
       ordered.forEach((hand, slot) => {
@@ -404,6 +453,44 @@ const FingerPortal = (() => {
         const light = luma[index];
         let color;
         switch (style.effect) {
+          case "checker": {
+            const row = Math.floor(y / 8), column = Math.floor(x / 8);
+            color = palette[(row + column) % 2 ? light : 255 - light];
+            break;
+          }
+          case "glitch": {
+            const shift = Math.floor(y / 5) % 4 === 1 ? 14 : -4;
+            color = [input[at(x + shift, y) * 4], input[p + 1], input[at(x - shift, y) * 4 + 2]];
+            break;
+          }
+          case "venetian": {
+            const reflected = luma[at(x, y - y % 9 + 8 - y % 9)];
+            color = palette[y % 9 === 0 ? 16 : reflected];
+            break;
+          }
+          case "ribbon": {
+            const offset = Math.round(Math.sin(y / 12) * 11);
+            color = palette[luma[at(x + offset, y)]];
+            break;
+          }
+          case "fold":
+            color = palette[luma[at(Math.floor(width / 2) + Math.abs(x - Math.floor(width / 2)), y)]];
+            break;
+          case "blueprint": {
+            const edge = Math.abs(light - luma[at(x + 2, y)]) + Math.abs(light - luma[at(x, y + 2)]);
+            color = palette[clamp(edge * 5 + (x % 14 === 0 || y % 14 === 0 ? 58 : 7), 0, 255)];
+            break;
+          }
+          case "stipple": {
+            const grain = ((Math.imul(x + 1, 73856093) ^ Math.imul(y + 1, 19349663)) >>> 16) & 255;
+            color = palette[light > grain ? 255 : 0];
+            break;
+          }
+          case "chrome": {
+            const band = Math.round((.5 + .5 * Math.sin(light / 26 + y / 7)) * 255);
+            color = palette[band];
+            break;
+          }
           case "threshold":
             color = palette[light > 118 ? 255 : 0];
             break;
@@ -566,23 +653,29 @@ const FingerPortal = (() => {
     return samples;
   }
 
-  function loadSamples() {
-    if (!samplePromise) {
-      samplePromise = new Promise((resolve, reject) => {
+  function loadSamples(bank) {
+    if (!samplePromises.has(bank)) {
+      const terrace = bank === "terrace";
+      const loading = new Promise((resolve, reject) => {
         const script = document.createElement("script");
-        script.src = "verre-samples.js";
-        script.onload = () => window.MotionVerreSamples ? resolve(window.MotionVerreSamples) : reject(new Error("Verre audio is unavailable."));
+        script.src = terrace ? "terrace-samples.js" : "verre-samples.js";
+        script.onload = () => {
+          const audio = terrace ? window.MotionTerraceSamples : window.MotionVerreSamples;
+          if (audio) resolve(audio);
+          else reject(new Error("The selected sound bank is unavailable."));
+        };
         script.onerror = () => {
           script.remove();
-          reject(new Error("Verre audio could not load."));
+          reject(new Error("The selected sound bank could not load."));
         };
         document.head.append(script);
       }).catch(error => {
-        samplePromise = null;
+        samplePromises.delete(bank);
         throw error;
       });
+      samplePromises.set(bank, loading);
     }
-    return samplePromise;
+    return samplePromises.get(bank);
   }
 
   function createGeneratedSounds(context) {
@@ -642,8 +735,8 @@ const FingerPortal = (() => {
     const stereo = context.createStereoPanner();
     filter.Q.value = 0.45;
     filter.connect(stereo).connect(destination);
-    let buffers;
-    let preparing;
+    let buffers = {};
+    const preparing = new Map();
     let manualLibrary = false;
     let active;
     const sequence = MotionSound.createSequence(context, destination);
@@ -805,19 +898,22 @@ const FingerPortal = (() => {
 
     voice.useSamples = async assets => {
       const decoded = await decodeSamples(assets);
-      buffers = decoded;
+      buffers = { ...buffers, ...decoded };
       manualLibrary = true;
     };
 
-    voice.prepare = () => {
-      if (manualLibrary) return Promise.resolve();
-      preparing ??= loadSamples().then(decodeSamples).then(decoded => {
-        if (!manualLibrary) buffers = decoded;
-      }).catch(error => {
-        preparing = null;
-        if (!manualLibrary) throw error;
-      });
-      return preparing;
+    voice.prepare = (bank = "verre") => {
+      if (bank === "verre" && manualLibrary) return Promise.resolve();
+      if (!preparing.has(bank)) {
+        const task = loadSamples(bank).then(decodeSamples).then(decoded => {
+          if (bank !== "verre" || !manualLibrary) buffers = { ...buffers, ...decoded };
+        }).catch(error => {
+          preparing.delete(bank);
+          if (bank !== "verre" || !manualLibrary) throw error;
+        });
+        preparing.set(bank, task);
+      }
+      return preparing.get(bank);
     };
 
     return voice;

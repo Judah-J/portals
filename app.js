@@ -37,6 +37,10 @@
   const transport = byId("transport");
   const enableSound = byId("enable-sound");
   const enablePortal = byId("enable-portal");
+  const changeFrequencies = byId("change-frequencies");
+  const frequencyStatus = byId("frequency-status");
+  let soundBank = "verre";
+  const bankNames = { verre: "Verre", terrace: "Terrace House" };
   let camera = null;
   let lastDrawn;
 
@@ -304,8 +308,11 @@
     liveBlobs.closest("label").hidden = true;
     showTracks.closest("label").hidden = false;
     enablePortal.hidden = true;
+    changeFrequencies.hidden = true;
+    changeFrequencies.disabled = false;
+    frequencyStatus.hidden = true;
     enablePortal.disabled = false;
-    enablePortal.textContent = "Enable finger portal";
+    enablePortal.textContent = "Enable portal";
     switchCamera.hidden = true;
     cameraButton.textContent = "Open camera";
     transport.hidden = false;
@@ -348,7 +355,7 @@
     synth.setVolume(Number(volume.value), audioContext.currentTime);
     if (camera && !portalVoice) {
       portalVoice = FingerPortal.createVoice(audioContext, synth.input);
-      if (camera.detector) void portalVoice.prepare().catch(() => {});
+      if (camera.detector) void portalVoice.prepare(soundBank).catch(() => {});
     }
     return audioContext.resume();
   }
@@ -578,6 +585,9 @@
         if (camera === job) enableSound.hidden = ready && audioContext.state === "running";
       });
       enablePortal.hidden = false;
+      changeFrequencies.hidden = false;
+      frequencyStatus.textContent = "Sound bank: " + bankNames[soundBank];
+      frequencyStatus.hidden = false;
       liveBlobs.closest("label").hidden = false;
       liveBlobs.checked = Boolean(restore?.blobs);
       showTracks.closest("label").hidden = !liveBlobs.checked;
@@ -670,6 +680,32 @@
       portal: Boolean(job.detector || job.portalLoad)
     } });
   });
+  changeFrequencies.addEventListener("click", async () => {
+    const job = camera;
+    if (!job?.stream || changeFrequencies.disabled) return;
+    const next = soundBank === "verre" ? "terrace" : "verre";
+    changeFrequencies.disabled = true;
+    frequencyStatus.textContent = "Loading " + bankNames[next] + "…";
+    try {
+      initializeAudio();
+      portalVoice ??= FingerPortal.createVoice(audioContext, synth.input);
+      await portalVoice.prepare(next);
+      if (camera !== job) return;
+      soundBank = next;
+      renderPortal(null);
+      portalVoice(null);
+      job.portalActive = false;
+      job.portalTitle = null;
+      if (job.detector) job.gesture = FingerPortal.createGesture(soundBank);
+      gestureStatus.textContent = "";
+      job.highlightedControls = [];
+      frequencyStatus.textContent = "Sound bank: " + bankNames[soundBank];
+    } catch {
+      if (camera === job) frequencyStatus.textContent = "Could not load " + bankNames[next] + ". Still using " + bankNames[soundBank] + ".";
+    } finally {
+      if (camera === job) changeFrequencies.disabled = false;
+    }
+  });
   enablePortal.addEventListener("click", togglePortal);
 
   async function togglePortal() {
@@ -686,7 +722,7 @@
       portalStatus.hidden = true;
       portalControls.hidden = true;
       gestureStatus.textContent = "";
-      enablePortal.textContent = "Enable finger portal";
+      enablePortal.textContent = "Enable portal";
       return;
     }
     const attempt = {};
@@ -694,11 +730,11 @@
     enablePortal.textContent = "Disable finger portal";
     portalStatus.hidden = false;
     portalStatus.textContent = "Loading hand tracking…";
-    if (portalVoice) void portalVoice.prepare().catch(() => {});
+    if (portalVoice) void portalVoice.prepare(soundBank).catch(() => {});
     try {
       const detector = await FingerPortal.loadDetector();
       if (camera !== job || job.portalLoad !== attempt) return;
-      job.gesture = FingerPortal.createGesture();
+      job.gesture = FingerPortal.createGesture(soundBank);
       job.detector = detector;
       job.highlightedControls = [];
       job.highlightUntil = 0;

@@ -112,7 +112,9 @@
         <label><input id="original" type="checkbox" disabled> Original audio</label>
         <label class="volume">Synth volume <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8"></label>
         <button id="switch-camera" type="button" hidden>Switch to rear camera</button>
-        <button id="enable-portal" type="button" hidden>Enable finger portal</button>
+        <button id="enable-portal" type="button" hidden>Enable portal</button>
+        <button id="change-frequencies" type="button" aria-describedby="frequency-status" hidden>Change frequencies</button>
+        <output id="frequency-status" role="status" hidden></output>
         <button id="enable-sound" type="button" hidden>Enable sound</button>
         <button id="export" type="button" disabled>Download WAV</button>
       </div>

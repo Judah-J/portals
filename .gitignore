@@ -1,5 +1,6 @@
 # Local samples and exports
 /verre-samples.js
+/terrace-samples.js
 *.wav
 *.wave
 *.mp3
