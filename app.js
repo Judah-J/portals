@@ -39,7 +39,7 @@
   const enablePortal = byId("enable-portal");
   const changeFrequencies = byId("change-frequencies");
   const frequencyOptions = byId("frequency-options");
-  const bankButtons = Array.from(frequencyOptions.querySelectorAll("[data-sound-bank]"));
+  const bankButtons = Array.from(frequencyOptions?.querySelectorAll("[data-sound-bank]") ?? []);
   const frequencyStatus = byId("frequency-status");
   let soundBank = "verre";
   const bankNames = { verre: "Verre", terrace: "Terrace House", deep: "Deep House" };
@@ -588,7 +588,7 @@
         if (camera === job) enableSound.hidden = ready && audioContext.state === "running";
       });
       enablePortal.hidden = false;
-      changeFrequencies.hidden = false;
+      changeFrequencies.hidden = bankButtons.length === 0;
       showFrequencyOptions(false);
       frequencyStatus.textContent = "Sound bank: " + bankNames[soundBank];
       frequencyStatus.hidden = false;
@@ -685,16 +685,18 @@
     } });
   });
   function showFrequencyOptions(show) {
+    if (!frequencyOptions) return;
     frequencyOptions.hidden = !show;
     changeFrequencies.setAttribute("aria-expanded", String(show));
   }
 
   changeFrequencies.addEventListener("click", () => {
+    if (!frequencyOptions) return;
     const show = frequencyOptions.hidden;
     showFrequencyOptions(show);
     if (show) bankButtons.find(button => button.dataset.soundBank === soundBank)?.focus();
   });
-  frequencyOptions.addEventListener("keydown", event => {
+  frequencyOptions?.addEventListener("keydown", event => {
     if (event.key !== "Escape") return;
     showFrequencyOptions(false);
     changeFrequencies.focus();
