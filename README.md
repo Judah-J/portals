@@ -21,7 +21,7 @@ Open [http://127.0.0.1:5500/](http://127.0.0.1:5500/). Allow camera access in yo
 
 ## Audio and GitHub
 
-In camera mode, **Change frequencies** switches between the Verre and Terrace House sound banks. When served beside the page, the sample bundles load automatically. Terrace House adds eight filters at 124 or 125 BPM.
+In camera mode, **Change frequencies** switches between the Verre and Terrace House sound banks. When served beside the page, the sample bundles load automatically. Terrace House adds eight filters at 124 or 125 BPM. **Deep House** selects ten additional filters with Deep Tech-House loops at 124 BPM.
 
 The repo plays built-in generated sounds on a clean checkout. On GitHub Pages or locally, select **Load local sounds** and choose your own `verre-samples.js` bundle. The page reads it on your device and uses the samples for the current browser session. An existing bundle beside `index.html` is still recognized on a local server.
 

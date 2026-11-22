@@ -41,7 +41,17 @@ const FingerPortal = (() => {
     {"name":"Prismatic Fold","effect":"fold","effectName":"Prismatic Fold","edge":"#dac1ff","low":[18,9,35],"high":[232,192,255],"sample":"terrace5","bank":"terrace","transpose":0,"rootMidi":50,"beats":32,"bpm":124,"division":2,"pattern":[0,3,null,2,1,null,3,2],"blobWave":"sine","notes":2,"gate":0.72},
     {"name":"Blueprint","effect":"blueprint","effectName":"Blueprint","edge":"#badcff","low":[6,20,59],"high":[173,215,255],"sample":"terrace6","bank":"terrace","transpose":0,"rootMidi":50,"beats":32,"bpm":124,"division":2,"pattern":[0,null,2,1,3,2,null,1],"blobWave":"triangle","notes":2,"gate":0.72},
     {"name":"Ink Stipple","effect":"stipple","effectName":"Ink Stipple","edge":"#f7dac1","low":[26,12,17],"high":[235,216,183],"sample":"terrace7","bank":"terrace","transpose":0,"rootMidi":52,"beats":32,"bpm":124,"division":2,"pattern":[0,1,null,3,0,null,2,1],"blobWave":"sine","notes":2,"gate":0.72},
-    {"name":"Chrome Bands","effect":"chrome","effectName":"Chrome Bands","edge":"#d8f9eb","low":[10,14,20],"high":[218,248,248],"sample":"terrace8","bank":"terrace","transpose":0,"rootMidi":55,"beats":16,"bpm":125,"division":2,"pattern":[0,2,3,null,2,1,null,3],"blobWave":"triangle","notes":2,"gate":0.72}
+    {"name":"Chrome Bands","effect":"chrome","effectName":"Chrome Bands","edge":"#d8f9eb","low":[10,14,20],"high":[218,248,248],"sample":"terrace8","bank":"terrace","transpose":0,"rootMidi":55,"beats":16,"bpm":125,"division":2,"pattern":[0,2,3,null,2,1,null,3],"blobWave":"triangle","notes":2,"gate":0.72},
+    {"name":"Night Grid","effect":"nightGrid","effectName":"Night Grid","edge":"#85e1ff","low":[7,12,31],"high":[126,222,250],"sample":"deep1","bank":"deep","transpose":0,"rootMidi":55,"beats":16,"bpm":124,"division":2,"pattern":[0,2,null,1,0,null,3,2],"blobWave":"sine","notes":2,"gate":0.73},
+    {"name":"Soft Focus","effect":"softFocus","effectName":"Soft Focus","edge":"#f9d6eb","low":[29,14,32],"high":[250,201,221],"sample":"deep2","bank":"deep","transpose":0,"rootMidi":53,"beats":16,"bpm":124,"division":2,"pattern":[0,null,3,1,2,0,null,3],"blobWave":"triangle","notes":2,"gate":0.73},
+    {"name":"Chromatic Echo","effect":"colorEcho","effectName":"Chromatic Echo","edge":"#ffa790","low":[20,15,27],"high":[255,170,148],"sample":"deep3","bank":"deep","transpose":0,"rootMidi":52,"beats":16,"bpm":124,"division":4,"pattern":[1,0,null,2,3,null,1,2],"blobWave":"sine","notes":2,"gate":0.73},
+    {"name":"Contour Map","effect":"contours","effectName":"Contour Map","edge":"#ffc49a","low":[30,22,16],"high":[249,215,165],"sample":"deep4","bank":"deep","transpose":0,"rootMidi":59,"beats":16,"bpm":124,"division":2,"pattern":[0,3,2,null,0,2,null,1],"blobWave":"triangle","notes":2,"gate":0.73},
+    {"name":"Oblique Tiling","effect":"oblique","effectName":"Oblique Tiling","edge":"#a0faad","low":[14,31,19],"high":[175,237,165],"sample":"deep5","bank":"deep","transpose":0,"rootMidi":48,"beats":16,"bpm":124,"division":2,"pattern":[2,1,null,3,1,0,2,null],"blobWave":"sine","notes":2,"gate":0.73},
+    {"name":"Lenticular","effect":"lenticular","effectName":"Lenticular","edge":"#dcc1fa","low":[35,16,51],"high":[239,203,255],"sample":"deep6","bank":"deep","transpose":0,"rootMidi":56,"beats":16,"bpm":124,"division":4,"pattern":[0,2,1,null,3,null,0,2],"blobWave":"triangle","notes":2,"gate":0.73},
+    {"name":"Split Exposure","effect":"splitExposure","effectName":"Split Exposure","edge":"#9ccedb","low":[7,25,36],"high":[208,241,234],"sample":"deep7","bank":"deep","transpose":0,"rootMidi":51,"beats":16,"bpm":124,"division":2,"pattern":[1,3,null,0,2,1,null,3],"blobWave":"sine","notes":2,"gate":0.73},
+    {"name":"Glass Grain","effect":"glassGrain","effectName":"Glass Grain","edge":"#e3cfd2","low":[24,22,37],"high":[242,225,211],"sample":"deep8","bank":"deep","transpose":0,"rootMidi":57,"beats":16,"bpm":124,"division":2,"pattern":[0,1,2,null,0,3,2,null],"blobWave":"triangle","notes":2,"gate":0.73},
+    {"name":"Cross Process","effect":"crossProcess","effectName":"Cross Process","edge":"#f6d478","low":[17,35,17],"high":[252,221,109],"sample":"deep9","bank":"deep","transpose":0,"rootMidi":54,"beats":16,"bpm":124,"division":4,"pattern":[0,null,2,3,1,null,2,0],"blobWave":"sine","notes":2,"gate":0.73},
+    {"name":"VHS Drift","effect":"vhsDrift","effectName":"VHS Drift","edge":"#bad5ef","low":[18,20,42],"high":[183,215,255],"sample":"deep10","bank":"deep","transpose":0,"rootMidi":58,"beats":16,"bpm":124,"division":2,"pattern":[2,0,3,null,2,1,null,0],"blobWave":"triangle","notes":2,"gate":0.73}
   ];
   const choices = (...entries) => entries.map(([name, sample]) => ({ name, sample }));
   // Key and BPM of each prepared buffer, before the shared preset playback rate.
@@ -132,7 +142,37 @@ const FingerPortal = (() => {
     thBass124Em: ["Em",124],
     terrace8Loop: ["Gm",125],
     thSynth12502: ["Gm",125],
-    thBass125Gm: ["Gm",125]
+    thBass125Gm: ["Gm",125],
+    deep1Loop: ["Gm",124],
+    deep1Layer: ["Gm",124],
+    deep1Bass: ["Gm",124],
+    deep2Loop: ["Fm",124],
+    deep2Layer: ["Fm",124],
+    deep2Bass: ["Fm",124],
+    deep3Loop: ["Em",124],
+    deep3Layer: ["Em",124],
+    deep3Bass: ["Em",124],
+    deep4Loop: ["Bm",124],
+    deep4Layer: ["Bm",124],
+    deep4Bass: ["Bm",124],
+    deep5Loop: ["Cm",124],
+    deep5Layer: ["Cm",124],
+    deep5Bass: ["Cm",124],
+    deep6Loop: ["G#m",124],
+    deep6Layer: ["G#m",124],
+    deep6Bass: ["G#m",124],
+    deep7Loop: ["D#m",124],
+    deep7Layer: ["D#m",124],
+    deep7Bass: ["D#m",124],
+    deep8Loop: ["Am",124],
+    deep8Layer: ["Am",124],
+    deep8Bass: ["Am",124],
+    deep9Loop: ["F#m",124],
+    deep9Layer: ["F#m",124],
+    deep9Bass: ["F#m",124],
+    deep10Loop: ["A#m",124],
+    deep10Layer: ["A#m",124],
+    deep10Bass: ["A#m",124]
   };
   function compatibleChoices(options, dedupePairs = false) {
     const seenPairs = new Set();
@@ -174,7 +214,17 @@ const FingerPortal = (() => {
     terrace5: choices(["Synth 10","thSynth12410"]),
     terrace6: choices(["Synth 17","thSynth12417"]),
     terrace7: choices(["Synth 15","thSynth12415"]),
-    terrace8: choices(["Synth 02","thSynth12502"])
+    terrace8: choices(["Synth 02","thSynth12502"]),
+    deep1: choices(["Little","deep1Layer"]),
+    deep2: choices(["Group","deep2Layer"]),
+    deep3: choices(["Born","deep3Layer"]),
+    deep4: choices(["Before","deep4Layer"]),
+    deep5: choices(["Above","deep5Layer"]),
+    deep6: choices(["Health","deep6Layer"]),
+    deep7: choices(["Affect","deep7Layer"]),
+    deep8: choices(["Data","deep8Layer"]),
+    deep9: choices(["Beyond","deep9Layer"]),
+    deep10: choices(["Event","deep10Layer"])
   }, true);
   const bassChoices = compatibleChoices({
     silver: choices(["Pontil 1","pontil1A115"], ["Pontil 2","pontil2A115"], ["Scavo","scavoA115"]),
@@ -199,7 +249,17 @@ const FingerPortal = (() => {
     terrace5: choices(["Terrace bass","thBass124Dm"]),
     terrace6: choices(["Terrace bass","thBass124Dm"]),
     terrace7: choices(["Terrace bass","thBass124Em"]),
-    terrace8: choices(["Terrace bass","thBass125Gm"])
+    terrace8: choices(["Terrace bass","thBass125Gm"]),
+    deep1: choices(["Argue","deep1Bass"]),
+    deep2: choices(["May","deep2Bass"]),
+    deep3: choices(["Great","deep3Bass"]),
+    deep4: choices(["East","deep4Bass"]),
+    deep5: choices(["Next","deep5Bass"]),
+    deep6: choices(["Light","deep6Bass"]),
+    deep7: choices(["Blue","deep7Bass"]),
+    deep8: choices(["Marriage","deep8Bass"]),
+    deep9: choices(["North","deep9Bass"]),
+    deep10: choices(["Player","deep10Bass"])
   });
   const percussion = Object.fromEntries([90, 100, 115].map(bpm => [bpm, {
     drums: [1, 2, 3].map(number => ({ name: "Full drums " + number, sample: "full" + bpm + "_" + number })),
@@ -210,6 +270,18 @@ const FingerPortal = (() => {
     drums: [1, 2, 3].map(number => ({ name: "Terrace drums " + number, sample: "thDrums" + bpm + "_" + number })),
     tops: { name: "Terrace percussion", sample: "thTops" + bpm }
   }]));
+  const deepDrums = {
+    124: {
+      drums: choices(["Bear", "dhDrums1"], ["Dog", "dhDrums2"], ["Hotel", "dhDrums3"]),
+      tops: { name: "Bell tops", sample: "dhTops" }
+    }
+  };
+  const drumBanks = { verre: percussion, terrace: terraceDrums, deep: deepDrums };
+  const sampleBanks = {
+    verre: ["verre-samples.js", "MotionVerreSamples"],
+    terrace: ["terrace-samples.js", "MotionTerraceSamples"],
+    deep: ["deep-house-samples.js", "MotionDeepHouseSamples"]
+  };
   const samplePromises = new Map();
 
   function loadDetector() {
@@ -348,7 +420,7 @@ const FingerPortal = (() => {
       const style = bankStyles[variant];
       const layerChoices = matchingLayers[style.sample];
       const bassOptions = bassChoices[style.sample];
-      const drumOptions = (style.bank === "terrace" ? terraceDrums : percussion)[style.bpm ?? 115];
+      const drumOptions = drumBanks[style.bank ?? "verre"][style.bpm ?? 115];
       const triggered = new Map();
       const activation = [];
       ordered.forEach((hand, slot) => {
@@ -453,6 +525,57 @@ const FingerPortal = (() => {
         const light = luma[index];
         let color;
         switch (style.effect) {
+          case "nightGrid": {
+            const grid = x % 11 === 0 || y % 11 === 0;
+            color = palette[grid ? Math.max(166, light) : (light * light / 255) | 0];
+            break;
+          }
+          case "softFocus": {
+            const blur = (light + luma[at(x-4,y)] + luma[at(x+4,y)] + luma[at(x,y-4)] + luma[at(x,y+4)]) / 5;
+            color = palette[Math.min(255, blur * 1.13 + 18) | 0];
+            break;
+          }
+          case "colorEcho": {
+            const ghost = at(x - 8, y - 4) * 4;
+            color = [input[p] * .62 + input[ghost] * .38, input[p + 1] * .80, input[ghost + 2] * .8];
+            break;
+          }
+          case "contours": {
+            const level = light >> 5;
+            const border = (luma[at(x+1,y)] >> 5) !== level || (luma[at(x,y+1)] >> 5) !== level;
+            color = palette[border ? 225 : level * 22];
+            break;
+          }
+          case "oblique": {
+            const offset = Math.floor(y / 6) % 2 ? 4 : 0;
+            const u = x - x % 8 + offset;
+            color = palette[(x + y) % 8 === 0 ? 20 : luma[at(u, y - y % 6 + 3)]];
+            break;
+          }
+          case "lenticular": {
+            const angle = x % 9;
+            color = palette[angle === 0 ? 48 : luma[at(x + (angle < 5 ? -5 : 5),y)]];
+            break;
+          }
+          case "splitExposure": {
+            const separator = width * .55 - y * .22;
+            color = palette[Math.abs(x - separator) < 1.5 ? 255 : x < separator ? light : 255 - light];
+            break;
+          }
+          case "glassGrain": {
+            const grain = ((Math.imul(x + 1, 2654435761) ^ Math.imul(y + 1, 2246822519)) >>> 24) - 128;
+            const ripple = luma[at(x + Math.round(Math.sin(y / 3) * 2), y)];
+            color = palette[clamp(ripple + grain * .32, 0, 255) | 0];
+            break;
+          }
+          case "crossProcess":
+            color = [input[p] * .94 + 16, input[p + 1] * .85 + light * .18, 25 + input[p + 2] * .50];
+            break;
+          case "vhsDrift": {
+            const line = at(x + Math.round(Math.sin(y / 3) * 4), y) * 4;
+            color = y % 4 === 0 ? [light * .45, light * .55, light * .75] : [input[line], input[p + 1], input[line + 2] * .86];
+            break;
+          }
           case "checker": {
             const row = Math.floor(y / 8), column = Math.floor(x / 8);
             color = palette[(row + column) % 2 ? light : 255 - light];
@@ -655,12 +778,12 @@ const FingerPortal = (() => {
 
   function loadSamples(bank) {
     if (!samplePromises.has(bank)) {
-      const terrace = bank === "terrace";
+      const [file, globalName] = sampleBanks[bank];
       const loading = new Promise((resolve, reject) => {
         const script = document.createElement("script");
-        script.src = terrace ? "terrace-samples.js" : "verre-samples.js";
+        script.src = file;
         script.onload = () => {
-          const audio = terrace ? window.MotionTerraceSamples : window.MotionVerreSamples;
+          const audio = window[globalName];
           if (audio) resolve(audio);
           else reject(new Error("The selected sound bank is unavailable."));
         };

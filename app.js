@@ -38,9 +38,10 @@
   const enableSound = byId("enable-sound");
   const enablePortal = byId("enable-portal");
   const changeFrequencies = byId("change-frequencies");
+  const deepHouse = byId("deep-house");
   const frequencyStatus = byId("frequency-status");
   let soundBank = "verre";
-  const bankNames = { verre: "Verre", terrace: "Terrace House" };
+  const bankNames = { verre: "Verre", terrace: "Terrace House", deep: "Deep House" };
   let camera = null;
   let lastDrawn;
 
@@ -310,6 +311,8 @@
     enablePortal.hidden = true;
     changeFrequencies.hidden = true;
     changeFrequencies.disabled = false;
+    deepHouse.hidden = true;
+    deepHouse.disabled = false;
     frequencyStatus.hidden = true;
     enablePortal.disabled = false;
     enablePortal.textContent = "Enable portal";
@@ -586,6 +589,8 @@
       });
       enablePortal.hidden = false;
       changeFrequencies.hidden = false;
+      deepHouse.hidden = false;
+      deepHouse.setAttribute("aria-pressed", String(soundBank === "deep"));
       frequencyStatus.textContent = "Sound bank: " + bankNames[soundBank];
       frequencyStatus.hidden = false;
       liveBlobs.closest("label").hidden = false;
@@ -680,11 +685,13 @@
       portal: Boolean(job.detector || job.portalLoad)
     } });
   });
-  changeFrequencies.addEventListener("click", async () => {
+  changeFrequencies.addEventListener("click", () => void selectSoundBank(soundBank === "verre" ? "terrace" : "verre"));
+  deepHouse.addEventListener("click", () => void selectSoundBank("deep"));
+
+  async function selectSoundBank(next) {
     const job = camera;
-    if (!job?.stream || changeFrequencies.disabled) return;
-    const next = soundBank === "verre" ? "terrace" : "verre";
-    changeFrequencies.disabled = true;
+    if (!job?.stream || changeFrequencies.disabled || next === soundBank) return;
+    changeFrequencies.disabled = deepHouse.disabled = true;
     frequencyStatus.textContent = "Loading " + bankNames[next] + "…";
     try {
       initializeAudio();
@@ -692,6 +699,7 @@
       await portalVoice.prepare(next);
       if (camera !== job) return;
       soundBank = next;
+      deepHouse.setAttribute("aria-pressed", String(soundBank === "deep"));
       renderPortal(null);
       portalVoice(null);
       job.portalActive = false;
@@ -703,9 +711,9 @@
     } catch {
       if (camera === job) frequencyStatus.textContent = "Could not load " + bankNames[next] + ". Still using " + bankNames[soundBank] + ".";
     } finally {
-      if (camera === job) changeFrequencies.disabled = false;
+      if (camera === job) changeFrequencies.disabled = deepHouse.disabled = false;
     }
-  });
+  }
   enablePortal.addEventListener("click", togglePortal);
 
   async function togglePortal() {
