@@ -125,3 +125,6 @@ progress { width: min(320px, 55vw); height: 9px; }
 #sound-status:empty { display: none; }
 
 .home-link { text-decoration: none; }
+
+.frequency-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.frequency-options button[aria-pressed="true"] { border-color: var(--accent); }

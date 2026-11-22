@@ -113,8 +113,12 @@
         <label class="volume">Synth volume <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8"></label>
         <button id="switch-camera" type="button" hidden>Switch to rear camera</button>
         <button id="enable-portal" type="button" hidden>Enable portal</button>
-        <button id="change-frequencies" type="button" aria-describedby="frequency-status" hidden>Change frequencies</button>
-        <button id="deep-house" type="button" aria-pressed="false" aria-describedby="frequency-status" hidden>Deep House</button>
+        <button id="change-frequencies" type="button" aria-expanded="false" aria-controls="frequency-options" aria-describedby="frequency-status" hidden>Change frequencies</button>
+        <div id="frequency-options" class="frequency-options" role="group" aria-label="Sound bank" hidden>
+          <button type="button" data-sound-bank="verre" aria-pressed="true">Verre</button>
+          <button type="button" data-sound-bank="terrace" aria-pressed="false">Terrace House</button>
+          <button type="button" data-sound-bank="deep" aria-pressed="false">Deep House</button>
+        </div>
         <output id="frequency-status" role="status" hidden></output>
         <button id="enable-sound" type="button" hidden>Enable sound</button>
         <button id="export" type="button" disabled>Download WAV</button>
